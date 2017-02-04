@@ -6,8 +6,14 @@
  * Time: 22:12
  */
 
-// namespace nonmachine;
 setlocale(LC_ALL, 'de_DE.utf8');
+
+
+/**
+* noncompiler
+* @author     FLORIAN KUHLMANN <fk neuesignale com>
+*/
+
 
 class noncompiler
 {
@@ -17,6 +23,14 @@ class noncompiler
     private $a_compiledtext = array();
     private $NON = array('n','o','n');
 
+    
+    /**
+    * 
+    * Setting the input text
+    *
+    * @param string $text text which will be non compiled
+    */
+    
     public function setInputText($text) {
 
         // input as pure textstring
@@ -26,6 +40,14 @@ class noncompiler
         $this->a_input = explode(PHP_EOL, $text);
     }
 
+    
+    /**
+    * 
+    * Setting the input text
+    *
+    * @return array() with compiled text
+    */
+        
     public function compileText()
     {
         $noncount = 0;
@@ -96,19 +118,37 @@ class noncompiler
 
     }
 
-
+    /**
+    * 
+    * getting the input text
+    *
+    * @return string input text
+    */
+    
     public function getInputText() {
 
         return $this->inputtext;
 
     }
-
+    
+    /**
+    * 
+    * getting the input text
+    *
+    * @return array() input text
+    */
     public function getInputTextAsArray() {
 
         return $this->a_input;
 
     }
 
+    /**
+    * 
+    * getting the compiled text as array
+    *
+    * @return array() compiled text
+    */
 
     public function getCompiledTextAsArray() {
 
@@ -116,6 +156,12 @@ class noncompiler
 
     }
 
+    /**
+    * 
+    * getting the compiled text as string
+    *
+    * @return string compiled text
+    */
 
     public function getCompiledText() {
 
@@ -123,7 +169,14 @@ class noncompiler
 
     }
 
-    /* helping hands */
+    /**
+    * a helping hands 
+    * to get a proper unicode string split;
+    *
+    * @param $str string
+    * @param $l int 
+    * @return array() 
+    */
 
     function str_split_unicode($str, $l = 0) {
         if ($l > 0) {

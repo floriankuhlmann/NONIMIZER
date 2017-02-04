@@ -1,18 +1,35 @@
-<?php include('lib/noncompiler.php');
+<?php 
 
+/*
+*   NONIMIZER Version 0.3
+*   Author: florian kuhlmann
+*   Webpage: floriankuhlmann.com
+*   2016
+*
+*/
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $noninputtext = test_input($_POST['noninputtext']);
-    $non = new noncompiler();
+// just include one class with the NON compiler logic
+include('lib/noncompiler.php');
+
+// check and prepare the input data
+function test_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 
-// echo $noninputtext;
+// simple check of display state
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    $noninputtext = test_input($_POST['noninputtext']);
+    $non = new noncompiler();
 
-if (isset($noninputtext) && !empty($noninputtext)) {
-
-    $non->setInputText($noninputtext);
-    $non->compileText();
-
+    // ok we check if we really git something
+    if (isset($noninputtext) && !empty($noninputtext)) {
+        $non->setInputText($noninputtext);
+        $non->compileText();
+    }
 }
 
 ?>
@@ -60,60 +77,45 @@ if (isset($noninputtext) && !empty($noninputtext)) {
         }
 
     </style>
-
 </head>
 <body>
 
 <h1>the non machine - beta 0.3</h1>
 <p>This tool compiles every information of your choice into pure non.</p>
-<h3>Your source:</h3>
-<form action="index.php" method="post" name="nonsrc">
-
-    <pre><textarea name="noninputtext" id="noninputtext"><?php
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            echo $non->getInputText();
-        } else {
-            echo "Please input information. It will be compiled into non now.";
-        }
-
-        ?></textarea></pre>
-
+<h3>Your source:</h3> 
+    <form action="index.php" method="post" name="nonsrc">
+        <pre>
+            <textarea name="noninputtext" id="noninputtext">
+            <?php
+                // do we have some compiled Text?
+                if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                    echo $non->getInputText();
+                } else {
+                // of show just information
+                    echo "Please input information. It will be compiled into non now.";
+                }
+            ?>
+        </textarea>
+    </pre>
     <input class="submitnon" type="submit" value="Nonifiy Sourcedata">
 </form>
 
 
-<?php
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($non->getCompiledText())) {
-?>
-    <br><br>
-<h3>Compiled NON:</h3>
-<div class="thenon">
-
     <?php
-    echo $non->getCompiledText();
+    // just display the NON compiled Textdata
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($non->getCompiledText())) {
     ?>
-
-</div>
-<?php
-}
-?>
+        <br>
+        <br>
+        <h3>Compiled NON:</h3>
+        <div class="thenon">
+            <?php echo $non->getCompiledText();?>
+        </div>
+    <?php
+    }
+    ?>
 
 </body>
 </html>
 
 
-<?php
-
-/* some functions */
-
-function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
-
-
-?>
